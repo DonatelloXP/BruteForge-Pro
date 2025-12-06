@@ -65,6 +65,8 @@ pip install -r requirements.txt
 
 # Install system dependencies (Linux)
 sudo apt-get install freerdp2-x11 rdesktop
+
+
 System Dependencies
 Windows
 powershell
