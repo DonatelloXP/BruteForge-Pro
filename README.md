@@ -1,6 +1,6 @@
 # 🔥 BruteForge Pro
 
-![BruteForge Pro Banner](https://raw.githubusercontent.com/yourusername/bruteforge-pro/main/docs/banner.png)
+![BruteForge Pro Banner](https://raw.githubusercontent.com/DonatelloXP/BruteForge-Pro/main/docs/banner.png)
 
 ## 📖 Table of Contents
 - [Overview](#overview)
@@ -20,368 +20,312 @@
 
 ## 🎯 Overview
 
-**BruteForge Pro** is an advanced, multi-threaded brute force tool designed for security professionals and penetration testers. It supports multiple protocols with proper authentication flows, NTLM hash attacks, and advanced techniques like SMB session hijacking and WebDAV NTLM forced authentication.
+**BruteForge Pro** is an advanced, multi-threaded security testing tool built for authorized penetration tests, security research, and system hardening. It implements proper protocol handshakes and supports multiple authentication flows (including NTLM/NTLMv2 and pass-the-hash) to allow realistic testing of authentication mechanisms across services such as SMB, RDP, SSH, WinRM, HTTP/WebDAV, and more.
+
+This project is intended for use by security professionals with explicit permission to test the target systems. Do not use BruteForge Pro on systems you do not own or do not have authorization to test.
 
 ## ✨ Features
 
-### ✅ **Core Features**
-- **Multi-Protocol Support**: SSH, RDP, SMB, WinRM, HTTP, WebDAV
-- **Multi-Threading**: High-performance concurrent attacks
-- **Smart Throttling Bypass**: Configurable delays and jitter
-- **Connection State Detection**: Pre-attack service verification
-- **Comprehensive Logging**: Detailed attack logs and results
-- **Interactive & Auto Modes**: User-friendly interface
+### ✅ Core Features
+- Multi-protocol support: SSH, RDP, SMB, WinRM, HTTP, WebDAV, FTP and databases (experimental).
+- Multi-threading: configurable concurrency for high-performance testing.
+- Throttling & jitter: avoid detection and simulate realistic traffic patterns.
+- Connection state detection: pre-attack checks for reachable services.
+- Comprehensive logging: JSON, CSV, and plain-text outputs.
+- Interactive and command-line modes.
 
-### ✅ **Advanced Capabilities**
-- **NTLM Authentication**: Full LM/NT hash support
-- **Pass-the-Hash Attacks**: Direct hash authentication
-- **WebDAV NTLM Forced Auth**: Trigger NTLM authentication
-- **SMB Session Analysis**: Check for hijacking vulnerabilities
-- **Protocol Auto-Detection**: Smart service identification
-- **Custom Wordlist Support**: Multiple wordlist formats
-
-### ✅ **Technical Excellence**
-- **Proper Authentication Flows**: Real protocol handshakes
-- **Error Handling**: Comprehensive error detection and reporting
-- **Progress Tracking**: Real-time progress visualization
-- **Results Export**: JSON, CSV, and text output formats
-- **Modular Architecture**: Easy to extend and customize
+### ✅ Advanced Capabilities
+- NTLM authentication and support for LM/NT hash formats.
+- Pass-the-hash attacks (when applicable and authorized).
+- WebDAV NTLM forced-auth techniques.
+- SMB session analysis (signing, active sessions, potential relay issues).
+- Protocol auto-detection and modular architecture for extensions.
+- Custom wordlist formats and generators.
 
 ## 🚀 Installation
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip package manager
-- System dependencies (see below)
+- Python 3.8+
+- pip
+- Recommended system packages for RDP/SMB functionality (platform-dependent)
 
-### Quick Install
+### Clone the repository
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/bruteforge-pro.git
-cd bruteforge-pro
+git clone https://github.com/DonatelloXP/BruteForge-Pro.git
+cd BruteForge-Pro
+```
 
-# Install requirements
+### Create a virtual environment (recommended)
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux/macOS
+# venv\Scripts\activate    # Windows (PowerShell)
+```
+
+### Install Python dependencies
+```bash
 pip install -r requirements.txt
+```
 
-# Install system dependencies (Linux)
-sudo apt-get install freerdp2-x11 rdesktop
+### Platform-specific system dependencies (examples)
 
-
-System Dependencies
-Windows
-powershell
-# Install Python packages
-pip install impacket colorama pywinrm requests
-
-# For RDP support, install FreeRDP:
-# Download from: https://github.com/FreeRDP/FreeRDP/releases
 Linux (Ubuntu/Debian)
-bash
+```bash
 sudo apt-get update
-sudo apt-get install -y \
-    python3-pip \
-    freerdp2-x11 \
-    rdesktop \
-    nmap
+sudo apt-get install -y freerdp2-x11 rdesktop nmap
+```
 
-pip3 install -r requirements.txt
-macOS
-bash
-brew install python freerdp
-pip3 install -r requirements.txt
-Requirements File
-txt
-# requirements.txt
-impacket>=0.11.0
-colorama>=0.4.6
-requests>=2.31.0
-pywinrm>=0.4.3
-requests-ntlm>=1.2.0
-paramiko>=3.4.0
-🎮 Quick Start
-Interactive Mode (Recommended)
-bash
+macOS (Homebrew)
+```bash
+brew install freerdp
+```
+
+Windows
+- Install Python and pip.
+- Optional: Install FreeRDP builds or RDP client for RDP integration if required.
+
+Note: Some features depend on external tools (FreeRDP, rdesktop) and Python modules (impacket, pywinrm). See `requirements.txt` and system package managers for details.
+
+## 🎮 Quick Start
+
+Interactive mode (recommended)
+```bash
 python bruteforge.py
-Follow the interactive menu to configure your attack.
+```
 
-Quick Test Mode
-bash
+Quick test mode
+```bash
 python bruteforge.py --quick
-Command Line Mode
-bash
+```
+
+Command-line example
+```bash
 python bruteforge.py --target 192.168.1.100 --username admin --protocol smb
-📊 Usage Examples
-Example 1: Basic SMB Brute Force
-bash
+```
+
+## 📊 Usage Examples
+
+Example 1: Basic SMB brute force
+```bash
 python bruteforge.py --target 192.168.1.100 --username Administrator \
-    --protocol smb --wordlist passwords.txt --threads 20
-Example 2: RDP Attack with Delay
-bash
+  --protocol smb --wordlist wordlists/passwords.txt --threads 20
+```
+
+Example 2: RDP attack with delay and jitter
+```bash
 python bruteforge.py --target 192.168.1.100 --username admin \
-    --protocol rdp --delay 0.5 --jitter 0.2 --timeout 15
-Example 3: Pass-the-Hash Attack
-bash
+  --protocol rdp --delay 0.5 --jitter 0.2 --timeout 15
+```
+
+Example 3: Pass-the-Hash (LM:NT format)
+```bash
 python bruteforge.py --target 192.168.1.100 --username Administrator \
-    --hash aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0
-Example 4: WebDAV NTLM Forced Authentication
-bash
+  --hash aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0
+```
+
+Example 4: WebDAV NTLM forced-auth
+```bash
 python bruteforge.py --target 192.168.1.100 --protocol webdav --port 80
-Example 5: Multi-Protocol Auto Detection
-bash
+```
+
+Example 5: Auto-detect protocol and run
+```bash
 python bruteforge.py --target 192.168.1.100 --username admin --auto-detect
-🛠️ Attack Types
+```
+
+## 🛠️ Attack Types
+
 1. Standard Brute Force
-Password guessing against various protocols
-
-Configurable wordlists and patterns
-
-Rate limiting and delay controls
+   - Password guessing against supported protocols with configurable wordlists, delays, and patterns.
 
 2. NTLM Hash Attacks
-Pass-the-Hash authentication
-
-LM/NT hash computation and usage
-
-Domain authentication support
+   - Pass-the-hash testing using LM/NT hashes where applicable and authorized.
 
 3. WebDAV NTLM Forced Auth
-Trigger NTLM authentication via WebDAV
-
-Capture NTLM hashes (with proper setup)
-
-HTTP protocol exploitation
+   - Techniques to trigger NTLM authentication flows for testing.
 
 4. SMB Session Analysis
-Check SMB signing requirements
+   - Check SMB signing requirements, enumerate sessions, and identify relay-related issues.
 
-List active SMB sessions
+5. Protocol-Specific Techniques
+   - SSH key-based attempts, RDP NLA checks, WinRM command execution (authorized only).
 
-Identify relay vulnerabilities
+## 🌐 Protocol Support
 
-5. Protocol-Specific Attacks
-SSH key-based authentication attempts
+| Protocol | Port(s)       | Methods / Notes                 | Status        |
+|---------:|---------------:|----------------------------------|---------------|
+| SMB      | 445            | NTLM / NTLMv2, session analysis  | ✅ Supported  |
+| RDP      | 3389           | NLA / SSL                        | ✅ Supported  |
+| WinRM    | 5985 / 5986    | HTTP / HTTPS                     | ✅ Supported  |
+| SSH      | 22             | Password / Key                   | ✅ Supported  |
+| HTTP     | 80 / 443       | Basic / Digest / NTLM (WebDAV)   | ✅ Supported  |
+| WebDAV   | 80 / 443       | NTLM forced auth                 | ✅ Supported  |
+| FTP      | 21             | Plaintext auth                   | ⚠️ Limited   |
+| MySQL    | 3306           | Native auth                      | ⚙️ Experimental |
+| MSSQL    | 1433           | Windows auth                     | ⚙️ Experimental |
 
-RDP NLA bypass techniques
+## ⚙️ Configuration
 
-WinRM PowerShell command execution
-
-🌐 Protocol Support
-Protocol	Port	Method	Status
-SMB	445	NTLM/NTLMv2	✅ Fully Supported
-RDP	3389	NLA/SSL	✅ Fully Supported
-WinRM	5985/5986	HTTP/HTTPS	✅ Fully Supported
-SSH	22	Password/Key	✅ Fully Supported
-HTTP	80/443	Basic/Digest Auth	✅ Fully Supported
-WebDAV	80/443	NTLM Forced Auth	✅ Fully Supported
-FTP	21	Plaintext Auth	⚠️ Limited
-MySQL	3306	Native Auth	⚙️ Experimental
-MSSQL	1433	Windows Auth	⚙️ Experimental
-⚙️ Configuration
-Command Line Arguments
-bash
+Command-Line Arguments (shortened)
+```
 Required:
   --target TARGET       Target IP address or hostname
   --username USERNAME   Username for authentication
 
 Optional:
-  --protocol {ssh,rdp,smb,winrm,http,webdav}
-                        Protocol to attack
-  --port PORT           Target port (auto-detected if not specified)
-  --wordlist WORDLIST   Password wordlist file
-  --threads THREADS     Number of threads (default: 10)
-  --timeout TIMEOUT     Connection timeout in seconds (default: 10)
-  --delay DELAY         Delay between attempts in seconds (default: 0)
-  --jitter JITTER       Random jitter to add to delay (default: 0)
-  --hash HASH           NTLM hash for pass-the-hash (LM:NT format)
-  --domain DOMAIN       Domain for Windows authentication
-  --output OUTPUT       Output file for results (default: results.json)
-  --quick               Quick test mode
-  --auto-detect         Auto-detect protocol and port
-  --verbose             Verbose output mode
-Configuration File
-Create config.json:
+  --protocol {ssh,rdp,smb,winrm,http,webdav,ftp,mysql,mssql}
+  --port PORT
+  --wordlist FILE
+  --threads N
+  --timeout SECONDS
+  --delay SECONDS
+  --jitter SECONDS
+  --hash LM:NT
+  --domain DOMAIN
+  --output FILE
+  --quick
+  --auto-detect
+  --verbose
+  --debug
+```
 
-json
+Configuration file (optional) — config.json
+```json
 {
-    "defaults": {
-        "threads": 15,
-        "timeout": 12,
-        "delay": 0.3,
-        "jitter": 0.1,
-        "output_format": "json"
+  "defaults": {
+    "threads": 15,
+    "timeout": 12,
+    "delay": 0.3,
+    "jitter": 0.1,
+    "output_format": "json"
+  },
+  "wordlists": {
+    "default": "wordlists/common.txt",
+    "windows": "wordlists/windows.txt",
+    "linux": "wordlists/linux.txt"
+  },
+  "protocols": {
+    "smb": {
+      "port": 445,
+      "domain": "WORKGROUP"
     },
-    "wordlists": {
-        "default": "wordlists/common.txt",
-        "windows": "wordlists/windows.txt",
-        "linux": "wordlists/linux.txt"
-    },
-    "protocols": {
-        "smb": {
-            "port": 445,
-            "domain": "WORKGROUP"
-        },
-        "rdp": {
-            "port": 3389,
-            "use_nla": true
-        }
+    "rdp": {
+      "port": 3389,
+      "use_nla": true
     }
+  }
 }
-📊 Output & Logging
-Results Format
-Results are saved in multiple formats:
+```
 
-JSON Output (Default)
-json
+## 📊 Output & Logging
+
+Results are saved in JSON, CSV, and plain-text formats. Example JSON (summary):
+```json
 {
-    "attack_summary": {
-        "target": "192.168.1.100",
-        "protocol": "smb",
-        "duration": "45.23s",
-        "attempts": 1000,
-        "successful": 1
-    },
-    "credentials_found": [
-        {
-            "username": "Administrator",
-            "password": "P@ssw0rd123",
-            "timestamp": "2024-01-15T14:30:22"
-        }
-    ],
-    "statistics": {
-        "attempts_per_second": 22.1,
-        "success_rate": "0.1%"
+  "attack_summary": {
+    "target": "192.168.1.100",
+    "protocol": "smb",
+    "duration": "45.23s",
+    "attempts": 1000,
+    "successful": 1
+  },
+  "credentials_found": [
+    {
+      "username": "Administrator",
+      "password": "P@ssw0rd123",
+      "timestamp": "2024-01-15T14:30:22"
     }
+  ],
+  "statistics": {
+    "attempts_per_second": 22.1,
+    "success_rate": "0.1%"
+  }
 }
-Text Log
-text
-[2024-01-15 14:30:22] START Attack on 192.168.1.100:445 (SMB)
-[2024-01-15 14:30:25] TRY Administrator:password123 - FAILED
-[2024-01-15 14:30:27] TRY Administrator:admin123 - FAILED
-[2024-01-15 14:30:45] SUCCESS Administrator:P@ssw0rd123
-[2024-01-15 14:31:07] END Attack completed in 45.23s
-Console Output
-text
-╔══════════════════════════════════════════════════════════╗
-║                    ATTACK SUMMARY                        ║
-╚══════════════════════════════════════════════════════════╝
+```
 
-Target: 192.168.1.100:445
-Protocol: SMB
-Username: Administrator
-Duration: 45.23 seconds
-Attempts: 1000
-Success Rate: 1/1000 (0.1%)
-Speed: 22.1 attempts/second
+Console logging provides a human-readable summary and progress updates. All outputs include timestamps and can be configured with `--output` and `--verbose`.
 
-[✓] CREDENTIALS FOUND:
-  Administrator:P@ssw0rd123
-    SMB login successful - Found 3 shares
+## 🔧 Advanced Techniques
 
-Results saved to: results_20240115_143022.json
-🔧 Advanced Techniques
-Throttling Bypass
-bash
-# Add random delays to avoid detection
+Throttling bypass and adaptive delays:
+```bash
 python bruteforge.py --target 192.168.1.100 --delay 1.5 --jitter 0.5
-
-# Exponential backoff on failure
 python bruteforge.py --target 192.168.1.100 --adaptive-delay
-Domain Authentication
-bash
-# Attack domain account
+```
+
+Domain attacks (authorized testing against AD/Domain controllers):
+```bash
 python bruteforge.py --target dc.company.local --username jdoe \
-    --domain COMPANY --protocol smb
-Custom Wordlist Generation
-bash
-# Generate custom wordlist based on target
+  --domain COMPANY --protocol smb
+```
+
+Custom wordlist generation:
+```bash
 python tools/wordlist_gen.py --target 192.168.1.100 --output custom.txt
-Session Hijacking Detection
-bash
-# Check for SMB session hijacking possibilities
+```
+
+Session hijacking detection (SMB):
+```bash
 python bruteforge.py --target 192.168.1.100 --check-sessions
-🐛 Troubleshooting
-Common Issues
-Issue: "Attempts: 0" in results
-Solution: Ensure proper protocol handlers are installed:
+```
 
-bash
-# For SMB
-pip install impacket
+## 🐛 Troubleshooting
 
-# For RDP
-sudo apt-get install freerdp2-x11  # Linux
-# or install FreeRDP on Windows
-Issue: Connection timeouts
-Solution: Adjust timeout settings:
+Common issues and solutions:
 
-bash
-python bruteforge.py --target 192.168.1.100 --timeout 30 --delay 2
-Issue: Missing dependencies
-Solution: Install all requirements:
+- Attempts show 0:
+  - Ensure required protocol handlers are installed (e.g., `impacket` for SMB).
+  - Check network connectivity and firewall rules.
 
-bash
-pip install -r requirements.txt --upgrade
-Issue: RDP authentication fails
-Solution: Check NLA requirements:
+- Connection timeouts:
+  - Increase `--timeout` and add `--delay` between attempts.
 
-bash
-# Try different authentication methods
-python bruteforge.py --target 192.168.1.100 --protocol rdp --no-nla
-Debug Mode
-bash
+- Missing dependencies:
+  - `pip install -r requirements.txt`
+  - For system dependencies, use your OS package manager.
+
+- RDP authentication failures:
+  - Try `--no-nla` or verify target NLA requirements.
+
+Debug mode:
+```bash
 python bruteforge.py --target 192.168.1.100 --debug --verbose
-⚖️ Legal Disclaimer
-BruteForge Pro is intended for:
+```
 
-✅ Authorized penetration testing
-✅ Security research
-✅ Educational purposes
-✅ System hardening
-✅ Legal security assessments
+## ⚖️ Legal Disclaimer
+
+BruteForge Pro is intended only for:
+- Authorized penetration testing
+- Security research with explicit permission
+- Educational purposes and system hardening
 
 WARNING:
-❌ NEVER use against systems you don't own or have permission to test
+- Do NOT use BruteForge Pro against systems you do not own or have written permission to test.
+- Illegal use is prohibited and the responsibility of the user.
 
-❌ NEVER use for illegal activities
+Always obtain authorization and follow responsible disclosure procedures.
 
-❌ NEVER violate laws or regulations
+## 🤝 Contributing
 
-❌ ALWAYS obtain proper authorization
+We welcome contributions:
+1. Fork the repository.
+2. Create a feature branch: git checkout -b feature/AmazingFeature
+3. Commit your changes: git commit -m "Add AmazingFeature"
+4. Push: git push origin feature/AmazingFeature
+5. Open a pull request.
 
-Compliance:
-Complies with penetration testing standards
-
-Supports responsible disclosure
-
-Includes safety features to prevent abuse
-
-🤝 Contributing
-We welcome contributions! Here's how:
-
-Fork the repository
-
-Create a feature branch (git checkout -b feature/AmazingFeature)
-
-Commit changes (git commit -m 'Add AmazingFeature')
-
-Push to branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
-
-Development Setup
-bash
-# Clone and setup
-git clone https://github.com/yourusername/bruteforge-pro.git
-cd bruteforge-pro
-
-# Create virtual environment
+Development setup:
+```bash
+git clone https://github.com/DonatelloXP/BruteForge-Pro.git
+cd BruteForge-Pro
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# or
-venv\Scripts\activate  # Windows
-
-# Install dev dependencies
+source venv/bin/activate
 pip install -r requirements-dev.txt
-
-# Run tests
 python -m pytest tests/
+```
+
+Please include tests for new features and follow the project's coding standards.
+
+## 📄 License
+
+This project is provided under the MIT License. See LICENSE for details.
