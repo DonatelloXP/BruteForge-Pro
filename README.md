@@ -1,182 +1,249 @@
-🔥 BruteForge Pro
+<div align="center">🔥 BruteForge Pro</div>
+<div align="center"> <img src="https://raw.githubusercontent.com/DonatelloXP/BruteForge-Pro/main/docs/banner.png" width="90%"> </div> <br> <p align="center"> <img src="https://img.shields.io/badge/BruteForge-Pro-red?style=for-the-badge"> <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge"> <img src="https://img.shields.io/badge/Platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=for-the-badge"> <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"> </p> <p align="center"> <b>Multi-Protocol Brute Force & NTLM Attack Framework for Professional Red Teams.</b><br> Designed for real-world authentication testing, NTLM exploitation, credential discovery, and advanced Windows network enumeration. </p>
+📖 Table of Contents
 
-Advanced Multi-Protocol Brute Force & NTLM Attack Suite
+Overview
 
+Key Features
 
+Framework Architecture
 
+Installation
 
+Quick Start
 
+Usage Scenarios
 
+Supported Attacks
 
+Protocol Matrix
 
-BruteForge Pro is a professional penetration-testing toolkit built for real-world brute force automation, NTLM attacks, and authentication exploitation.
+Configuration
 
-📌 Overview
+Output & Logging
 
-BruteForge Pro is a modern, modular, high-performance attack framework designed for Red Teams and security researchers.
-It supports multi-protocol brute force, NTLM pass-the-hash, WebDAV forced authentication, RDP/SSH attacks, and SMB session analysis — all with real protocol handshakes and proper authentication flows.
+Advanced Workflow
 
-Built for speed.
-Built for stealth.
-Built for professionals.
+Troubleshooting
 
-✨ Features
-🚀 Core Features
+Ethical & Legal Notice
 
-Multi-protocol brute force (SSH, SMB, RDP, WinRM, HTTP, WebDAV)
+Contributing
 
-Multi-threaded attack engine
+License
 
-Smart throttling (delay + jitter)
+🎯 Overview
 
-Service & protocol auto-detection
+BruteForge Pro is a modern, modular, offensive-security framework used by Red Teams to audit authentication systems, discover weak credentials, analyze NTLM authentication flows, and perform realistic brute force & credential-based attacks across multiple network services.
 
-Interactive mode + CLI mode
+It is not مجرد أداة Brute Force —
+بالعكس، هي Framework كاملة تحتوى على:
 
-JSON / CSV / text log output
+✔ Protocol Engines
+✔ Attack Modules
+✔ NTLM Engine
+✔ Session Hijacking Detection
+✔ Wordlist Intelligence
+✔ Workflow Automation
 
-Clean modular architecture
+✨ Key Features
+🚀 Core Engines
 
-🛡️ Advanced Capabilities
+Multi-Protocol Attack Engine
 
-Full NTLMv1/v2 authentication support
+SSH, RDP, SMB, WinRM, HTTP/WebDAV, FTP, MySQL, MSSQL
 
-Pass-the-Hash attacks
+Real Protocol Handshakes
 
-SMB session enumeration
+Multi-Thread Distributed Brute Force
 
-WebDAV NTLM forced authentication
+Smart Throttling (Delay/Jitter)
 
-Real-time progress bar
+Full Logging System (JSON, CSV, TXT)
 
-Wordlist auto-optimization
+🔥 NTLM Capabilities
 
-Attack simulation & dry-run mode
+Pass-the-Hash (LM:NT)
 
-⚙️ Installation
-Requirements
+NTLMv1 / NTLMv2 Auth
 
-Python 3.8+
+SMB Signing Detection
 
-pip
+WebDAV NTLM Forced Authentication
 
-On Linux (recommended):
+Session Enumeration & Relay-Check
 
-sudo apt install freerdp2-x11 rdesktop nmap
+⚙️ Operational Capabilities
 
-Install
-git clone https://github.com/yourusername/bruteforge-pro
-cd bruteforge-pro
+Protocol Auto-Detection
+
+Service Probe / Banner Grabbing
+
+Adaptive Timeout Engine
+
+Wordlist Optimizer
+
+Modular & Extensible Attack Modules
+
+offline mode / Simulation mode
+
+🧠 Framework Architecture
+BruteForge-Pro/
+├── /core
+│   ├── protocol_detector.py
+│   ├── auth_handlers.py
+│   ├── ntlm_engine.py
+│   └── session_hijacker.py
+├── /modules
+│   ├── smb.py
+│   ├── ssh.py
+│   ├── rdp.py
+│   └── webdav.py
+├── /tools
+│   ├── wordlist_generator.py
+│   ├── hash_calculator.py
+│   └── results_analyzer.py
+└── bruteforge.py
+
+🛠️ Installation
+Clone
+git clone https://github.com/DonatelloXP/BruteForge-Pro
+cd BruteForge-Pro
+
+Install Dependencies
 pip install -r requirements.txt
 
+Recommended (Linux)
+sudo apt install freerdp2-x11 rdesktop nmap
+
 🚀 Quick Start
-🧭 Interactive Mode
+Interactive Mode
 python bruteforge.py
 
-📌 Command-Line Example
-python bruteforge.py --target 192.168.1.10 \
-    --protocol smb \
-    --username Administrator \
-    --wordlist wordlists/top_100.txt \
-    --threads 20
+One-Line Attack Example
+python bruteforge.py --target 192.168.1.10 --protocol smb \
+  --username Administrator --wordlist wordlists/top_100.txt
 
-🔐 Pass-the-Hash Example
+Pass-the-Hash
 python bruteforge.py --target 192.168.1.10 \
-    --username admin \
-    --hash aad3b435b51404eeaad3b435b51404ee:31d6cfe0...
+  --username admin \
+  --hash LM:NT
 
-🌐 Supported Protocols
-Protocol	Port	Authentication	Status
-SMB	445	NTLM/NTLMv2	✅ Full
-RDP	3389	NLA/SSL	✅ Full
-WinRM	5985/5986	HTTP/S	✅ Full
-SSH	22	Password / Key	✅ Full
-HTTP	80/443	Basic/Digest	✅ Full
-WebDAV	80/443	NTLM Forced Auth	✅ Full
-FTP	21	Password	⚠️ Limited
-MySQL	3306	Native Auth	⚙️ Experimental
-MSSQL	1433	Windows Auth	⚙️ Experimental
-🛠️ Configuration (config.json)
+🎮 Usage Scenarios
+🧱 Windows Domain Weak Password Discovery
+
+Test weak AD passwords before attackers exploit them.
+
+🕵️ Red Team Credential Access
+
+NTLM forced authentication, session enumeration, relay-checking.
+
+🔐 SecOps Hardening
+
+Validate password policies, auditing misconfigurations.
+
+🔥 Supported Attacks
+Attack Type	Description
+Brute Force	Multi-thread high-speed guessing
+Pass-the-Hash	LM/NT authentication
+WebDAV Forced Auth	Trigger NTLM hashes
+SMB Session Hijacking Analysis	Check relay/signed sessions
+SSH/RDP Hardening Tests	Validate login security
+🌐 Protocol Matrix
+Protocol	Port	Auth	Status
+SMB	445	NTLMv1/v2	Full
+RDP	3389	NLA/SSL	Full
+SSH	22	Password/Key	Full
+WinRM	5985/5986	Token/Basic	Full
+HTTP	80/443	Basic/Digest	Full
+WebDAV	80/443	NTLM	Full
+FTP	21	Plain	Limited
+MySQL	3306	DB Auth	Experimental
+MSSQL	1433	Windows Auth	Experimental
+⚙️ Configuration
+CLI Arguments
+--target 192.168.1.10
+--protocol smb
+--username admin
+--wordlist passwords.txt
+--threads 20
+--delay 0.2
+--jitter 0.1
+--hash LM:NT
+--auto-detect
+--check-sessions
+
+config.json Template
 {
-    "defaults": {
-        "threads": 15,
-        "timeout": 12,
-        "delay": 0.3,
-        "jitter": 0.1,
-        "output_format": "json"
-    },
-    "wordlists": {
-        "default": "wordlists/common_passwords.txt",
-        "windows": "wordlists/windows_passwords.txt",
-        "top": "wordlists/top_100.txt"
-    }
+  "defaults": {
+    "threads": 20,
+    "timeout": 15,
+    "delay": 0.4
+  }
 }
 
-📊 Output Examples
-JSON Result
+📊 Output & Logging
+JSON Example
 {
-  "target": "192.168.1.100",
+  "target": "192.168.1.10",
   "protocol": "smb",
-  "successful": [
-    {
-      "username": "Administrator",
-      "password": "P@ssw0rd123",
-      "timestamp": "2025-01-15T14:30:22"
-    }
+  "success": [
+     {"username": "Administrator", "password": "P@ssw0rd!"}
   ]
 }
 
 Console Summary
-[✓] SUCCESS — Administrator:P@ssw0rd123  
-SMB login successful — Shares: 3  
-Attempts: 1000  
-Speed: 22.1 attempts/sec  
+[✓] SUCCESS admin:Winter2024
+Attempts: 420
+Speed: 21.8/sec
+
+🔧 Advanced Workflow
+⚡ Throttling Bypass
+python bruteforge.py --delay 1.2 --jitter 0.5
+
+🏢 Domain Authentication
+python bruteforge.py --domain CORP --protocol smb
+
+🧬 Intelligent Wordlist
+python tools/wordlist_generator.py --target 192.168.1.10
 
 🐛 Troubleshooting
-Problem	Reason	Fix
-Attempts = 0	Missing protocol backend	Install impacket, paramiko, etc
-RDP fails	NLA required	Use --no-nla
-Timeouts	Slow target	Increase: --timeout 30
-SMB errors	Port blocked	Check port 445
+Issue	Cause	Fix
+Attempts = 0	Missing dependencies	pip install impacket
+RDP fails	NLA enabled	Use --no-nla
+SMB timeout	Firewall	--timeout 30
 
-Debug Mode:
+Debug:
 
-python bruteforge.py --debug --verbose
+python bruteforge.py --debug
 
-⚖️ Legal Disclaimer
+⚖️ Ethical & Legal Notice
 
-BruteForge Pro is intended ONLY for:
+BruteForge Pro is for authorized testing ONLY.
+Using it without explicit permission is illegal.
 
-✔ Authorized penetration testing
-
-✔ Red Team operations
-
-✔ Research & education
-
-✔ Security auditing
-
-🚨 Never attack a system without explicit permission.
-Misuse may result in criminal prosecution.
+Allowed Use Cases:
+✔ Pentest with written authorization
+✔ Red Team engagements
+✔ Internal security audits
+✔ Educational & research labs
 
 🤝 Contributing
-git clone https://github.com/yourusername/bruteforge-pro
+Development Setup
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+source venv/bin/activate
 pip install -r requirements.txt
 
 
-Pull requests and contributions are welcome.
+Pull requests are welcome.
 
 📄 License
 
-This project is licensed under the MIT License.
-See the LICENSE file for details.
+MIT License — See LICENSE.
 
 <div align="center">
-⭐ BruteForge Pro
-Because authentication can be forged.
+⭐ If BruteForge Pro helps you, leave a star on GitHub!
 
-If you like this project — Star ⭐ the repo!
+Because Authentication CAN Be Forged.
 
 </div>
